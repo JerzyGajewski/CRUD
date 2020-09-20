@@ -1,15 +1,33 @@
 package pl.jerzyGajewski.Entity;
 
 public class User {
-private String userName;
-private String email;
-private String password;
+    private int id;
+    private String userName;
+    private String email;
+    private String password;
 
-public User(){}
+    public User() {
+    }
+
+    public User(int id, String userName, String email, String password) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {

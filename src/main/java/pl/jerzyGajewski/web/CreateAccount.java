@@ -22,6 +22,6 @@ public class CreateAccount extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(request.getContextPath() + "/WEB-INF/views/createAccount.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/views/createAccount.jsp").forward(request, response);
     }
 }

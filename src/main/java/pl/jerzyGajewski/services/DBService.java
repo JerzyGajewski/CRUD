@@ -41,7 +41,8 @@ public class DBService {
 
     public static List<Map<String, String>> getData(String query, String... params) {
         DBService.loadDriver();
-        try (Connection conn = getConnection();
+        try (Connection
+                     conn = getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             //patrzymy jaką liczbę parametrów podaliśmy i wyciągnięte przypisujemy do numeru ? w zapytaniu
             for (int i = 0; i < params.length; i++) {
@@ -75,10 +76,26 @@ public class DBService {
 
         List<String> columnValues = new ArrayList<>();
         // dla każdego numeru kolumny sprawdza jaka jest wartość, zamienia numer na wartość i wstaeia do listy
-        for (int i = 0; i <= columnCount; i++) {
+        for (int i = 1; i <= columnCount; i++) {
             String value = rsmd.getColumnName(i);
             columnValues.add(value);
         }
         return columnValues;
     }
+
+    public static void update(String query, String... params) throws SQLException {
+        try (
+                Connection conn = getConnection();
+                PreparedStatement statement = conn.prepareStatement(query);
+        ) {
+            for (int i = 0; i < params.length; i++) {
+                statement.setString(i + 1, params[i]);
+            }
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
 }

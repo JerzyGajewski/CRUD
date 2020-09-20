@@ -13,15 +13,15 @@
 </head>
 <body>
 <c:forEach var="user" items="${users}">
-    <li>
-        <p>${user.id}</p>
-        <p>${user.userName}</p>
-        <p>${user.email}</p>
-    </li>
+
+    <p>${user.id}, ${user.userName}, ${user.email}</p>
+    <a href=<c:url value="/showInfo?id=${user.id}"/>>Pokaż</a>
+    <a href=<c:url value="/edit?id=${user.id}"/>>Edutuj</a>
+    <a href=<c:url value="/delete?id=${user.id}"/>>Usuń</a>
+
 </c:forEach>
-    <p>Zarejestruj się</p>
-    <a href=
-       <c:url value="/createAccount"/>>zarejestruj się</a>
+<p>Zarejestruj się</p>
+<a href=<c:url value="/createAccount"/>>zarejestruj się</a>
 
 </body>
 </html>

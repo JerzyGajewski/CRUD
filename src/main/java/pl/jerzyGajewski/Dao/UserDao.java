@@ -36,9 +36,28 @@ public class UserDao {
         }
     }
 
+    public static void editUserData(User user) {
+        if(user.getId()==0){
+            System.out.println("brak");
+            return;
+        }
+       String query = "UPDATE users SET userName = ?, email = ?, password = ? WHERE id = ?";
+        DBService.loadDriver();
+        try (Connection conn = DBService.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setInt(4, user.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<User> showAllUsers() {
         List<User> users = new ArrayList<>();
-        String query = "SHOW * FROM users";
+        String query = "Select * from users;";
         List<Map<String, String>> data = DBService.getData(query);
 
         if (data != null) {
@@ -50,12 +69,27 @@ public class UserDao {
         return users;
     }
 
+    public static User showUser(int id) {
+        String query = "select userName, id, email, password from users where id =?";
+        List<Map<String, String>> data = DBService.getData(query, String.valueOf(id));
+        if (data != null) {
+            for (Map<String, String> row : data) {
+                User user = createUserFromData(row);
+                    return user;
+            }
+        }
+        return null;
+    }
+
     private static User createUserFromData(Map<String, String> data) {
         String id = data.get("id");
         String userName = data.get("userName");
         String email = data.get("email");
-        User user = new User(id, userName, email);
+        String password = data.get("password");
+        User user = new User(
+                Integer.parseInt(id), userName, email, password);
         return user;
     }
+
 }
 
